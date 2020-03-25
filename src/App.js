@@ -1,24 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef, useEffect } from "react";
+import styled, { css } from "styled-components";
 
-function App() {
+const Header = styled.h1`
+  color: red;
+  ${props =>
+    props.background &&
+    css`
+      background-color: ${props.background};
+    `}
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Hello = props => <Header>Hello {props.name}</Header>;
+
+export const Counter = ({ onSubmit = () => {} }) => {
+  const [count, setCount] = useState(0);
+  // state[0]: value
+  // state[1]: setValue
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+  const handleSubmit = () => {
+    onSubmit(count);
+    setCount(0);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Row>
+      <button className="" onClick={decrement}>
+        -
+      </button>
+      <p data-testid="count">{count}</p>
+      <button onClick={increment}>+</button>
+      <button onClick={handleSubmit}>Enviar</button>
+    </Row>
+  );
+};
+const Countdown = props => {
+  const [count, setCount] = useState(props.from);
+  const interval = useRef();
+  useEffect(() => {
+    let i = props.from;
+    interval.current = setInterval(() => {
+      i = i - 1;
+      setCount(i);
+    }, 1000);
+  }, [props.from]);
+  return <p>{count}</p>;
+};
+function App() {
+  const [numbers, setNumbers] = useState([]);
+  const addNumbers = number => setNumbers([...numbers, number]);
+  return (
+    <div>
+      <Hello name="Gabriel" />
+      <Counter onSubmit={addNumbers} />
+      <ul>
+        {numbers.map((number, i) => {
+          return (
+            <li key={i}>
+              <Countdown from={number} />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
