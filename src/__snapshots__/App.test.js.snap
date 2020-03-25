@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`COunter Increment 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-AxirZ jigHkS"
+    >
+      <button
+        class=""
+      >
+        -
+      </button>
+      <p
+        data-testid="count"
+      >
+        0
+      </p>
+      <button>
+        +
+      </button>
+      <button>
+        Enviar
+      </button>
+    </div>
+  </div>
+</body>
+`;
